@@ -1,0 +1,40 @@
+package com.lcwd.hotel.service.service.serviceImpl;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
+import com.lcwd.hotel.service.entities.Hotel;
+import com.lcwd.hotel.service.exceptions.ResourceNotFoundException;
+import com.lcwd.hotel.service.repository.HotelRepo;
+import com.lcwd.hotel.service.service.HotelService;
+
+import lombok.AllArgsConstructor;
+@Service
+@AllArgsConstructor
+public class HotelServiceImpl implements HotelService{
+
+private HotelRepo hotelRepo;	
+	
+	@Override
+	public Hotel create(Hotel hotel) {
+     
+	   String randomId=UUID.randomUUID().toString();
+	   hotel.setId(randomId);
+		return hotelRepo.save(hotel);
+	}
+
+	@Override
+	public List<Hotel> getAll() {
+      
+		return hotelRepo.findAll();
+	}
+
+	@Override
+	public Hotel getById(String id) throws ResourceNotFoundException {
+
+		return hotelRepo.findById(id).orElseThrow(()->new ResourceNotFoundException("the hotel with given id not found!!"));
+	}
+
+}

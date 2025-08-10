@@ -1,0 +1,41 @@
+package com.lcwd.user.service.service.impl;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
+import com.lcwd.user.service.entities.User;
+import com.lcwd.user.service.exceptions.ResourceNotFoundException;
+import com.lcwd.user.service.repository.UserRepo;
+import com.lcwd.user.service.service.UserService;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+@Service
+public class UserServiceImpl implements UserService{
+
+	private UserRepo userRepo;
+	
+	
+	@Override
+	public User saveUser(User user) {
+	String randomUserId=UUID.randomUUID().toString();
+	user.setId(randomUserId);
+		return userRepo.save(user);
+	}
+
+	@Override
+	public List<User> getAllUser() {
+		// TODO Auto-generated method stub
+		return userRepo.findAll();
+	}
+
+	@Override
+	public User getUser(String id) {
+		
+		return userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("user with given id is not found on server !!"+id));
+	}
+
+}

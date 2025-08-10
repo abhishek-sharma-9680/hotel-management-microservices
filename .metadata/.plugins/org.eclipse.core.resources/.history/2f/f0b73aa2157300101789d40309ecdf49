@@ -1,0 +1,5 @@
+package com.lcwd.hotel.service.service.serviceImpl;
+
+public class HotelServiceImpl {
+
+}
